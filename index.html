@@ -1,0 +1,1203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Unit 5 – Favourite Fashions (Class 5) | Colombo Americano</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet" />
+<style>
+  html, body { height: 100%; margin: 0; }
+  body { font-family: 'Nunito', sans-serif; background: #f5f3ff; overflow: hidden; }
+  h1, h2, h3, h4 { font-family: 'Fredoka One', cursive; font-weight: normal; }
+
+  .slide { position: absolute; inset: 0; opacity: 0; transform: translateX(60px); pointer-events: none; transition: opacity .4s ease, transform .4s ease; overflow-y: auto; padding: 1rem 1.5rem 6rem 1.5rem; }
+  .slide.active { opacity: 1; transform: translateX(0); pointer-events: auto; }
+  .slide.prev { transform: translateX(-60px); }
+  .slide::-webkit-scrollbar { width: 8px; }
+  .slide::-webkit-scrollbar-thumb { background: #c4b5fd; border-radius: 8px; }
+
+  .transition-top { border-left: 6px solid #7c3aed; background: linear-gradient(to right, #ede9fe, #f5f3ff); padding: 12px 18px; border-radius: 0 14px 14px 0; margin-bottom: 18px; color: #5b21b6; font-weight: 600; font-size: 1rem; }
+  .transition-bottom { border-left: 6px solid #f59e0b; background: linear-gradient(to right, #fef3c7, #fffbeb); padding: 12px 18px; border-radius: 0 14px 14px 0; margin-top: 20px; color: #92400e; font-weight: 600; font-size: 1rem; }
+  .badge { background: linear-gradient(135deg, #7c3aed, #6d28d9); color: white; padding: 3px 12px; border-radius: 99px; font-weight: 700; font-size: 0.75rem; }
+  .help-phrases { background: #fef3c7; border: 2px solid #f59e0b; padding: 10px 14px; border-radius: 12px; margin-top: 10px; color: #92400e; font-size: 0.9rem; }
+
+  .grammar-central-card { background: linear-gradient(145deg, #ffffff, #f5f3ff); border: 4px solid #7c3aed; border-radius: 24px; padding: 24px; box-shadow: 0 15px 35px rgba(124,58,237,0.15); }
+  .grammar-sentence-display { font-size: 1.6rem; font-weight: 800; text-align: center; padding: 16px; background: #faf5ff; border-radius: 16px; border: 3px dashed #c4b5fd; }
+  .grammar-sentence-display span { display: inline-block; padding: 2px 8px; border-radius: 8px; margin: 0 2px; }
+  .subject-part { background: #fef3c7; color: #92400e; border-bottom: 4px solid #f59e0b; }
+  .verb-part { background: #dbeafe; color: #1e40af; border-bottom: 4px solid #3b82f6; }
+  .participle-part { background: #dcfce7; color: #166534; border-bottom: 4px solid #22c55e; }
+  .extra-part { background: #fce7f3; color: #9d174d; border-bottom: 4px solid #ec4899; }
+  .arrow-label { display: inline-block; padding: 5px 12px; border-radius: 10px; font-weight: 700; font-size: 0.8rem; }
+  .arrow-subject { background: #fef3c7; color: #92400e; }
+  .arrow-verb { background: #dbeafe; color: #1e40af; }
+  .arrow-participle { background: #dcfce7; color: #166534; }
+  .arrow-extra { background: #fce7f3; color: #9d174d; }
+
+  .board-work-item { background: #f8fafc; border: 2px solid #cbd5e1; border-radius: 10px; padding: 10px 14px; margin-bottom: 6px; display: flex; justify-content: space-between; align-items: center; font-size: 0.9rem; }
+  .board-work-item:hover { border-color: #7c3aed; background: #f5f3ff; }
+
+  .culture-match { cursor: pointer; transition: 0.2s; padding: 10px 16px; border-radius: 12px; border: 2px solid #e5e7eb; background: white; text-align: center; font-weight: 600; font-size: 0.9rem; }
+  .culture-match:hover { background: #dbeafe; border-color: #3b82f6; }
+  .culture-match.selected { background: #c7d2fe; border-color: #4f46e5; }
+  .culture-match.matched { background: #86efac; border-color: #22c55e; }
+
+  .process-step { background: #f0fdf4; border: 2px solid #22c55e; border-radius: 14px; padding: 12px 16px; margin-bottom: 8px; display: flex; align-items: center; gap: 12px; }
+  .process-step.blurred { background: #f5f3ff; border: 2px dashed #a78bfa; color: #7c3aed; font-style: italic; }
+  .process-step .emoji { font-size: 2rem; flex-shrink: 0; }
+  .process-step .text { font-size: 0.95rem; font-weight: 600; color: #166534; }
+  .process-step.blurred .text { color: #7c3aed; }
+
+  .menu-panel { position: fixed; top: 0; left: 0; height: 100vh; width: 320px; background: white; box-shadow: 8px 0 30px rgba(0,0,0,0.15); transform: translateX(-100%); transition: transform .3s ease; z-index: 100; overflow-y: auto; }
+  .menu-panel.open { transform: translateX(0); }
+  .menu-item { display: block; width: 100%; text-align: left; padding: 12px 20px; border: none; background: none; cursor: pointer; font-weight: 600; color: #4c1d95; border-bottom: 1px solid #f3e8ff; transition: 0.2s; font-size: 0.9rem; }
+  .menu-item:hover { background: #f5f3ff; }
+  .menu-item.active { background: #7c3aed; color: white; }
+
+  #progress-bar { transition: width .4s ease; }
+
+  /* ===== VOLCANO BAR ===== */
+  .volcano-container { display: flex; align-items: center; gap: 8px; flex: 1; }
+  .volcano-track { flex: 1; height: 22px; background: #e5e7eb; border-radius: 99px; overflow: hidden; position: relative; box-shadow: inset 0 2px 4px rgba(0,0,0,0.1); }
+  .volcano-fill { height: 100%; width: 0%; background: #22c55e; transition: width .4s ease, background .4s ease; border-radius: 99px; position: relative; }
+  .volcano-fill::after { content: ''; position: absolute; inset: 0; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent); animation: shimmer 2s infinite; }
+  @keyframes shimmer { 0% { transform: translateX(-100%); } 100% { transform: translateX(100%); } }
+  .volcano-fill.level-1 { background: #22c55e; }
+  .volcano-fill.level-2 { background: #84cc16; }
+  .volcano-fill.level-3 { background: #eab308; }
+  .volcano-fill.level-4 { background: #f97316; }
+  .volcano-fill.level-5 { background: #ef4444; }
+  .volcano-fill.level-6 { background: #b91c1c; animation: pulse-red 1s infinite; }
+  @keyframes pulse-red { 0%, 100% { opacity: 1; } 50% { opacity: 0.7; } }
+
+  .spanish-btn { background: linear-gradient(135deg, #dc2626, #991b1b); color: white; font-weight: 800; padding: 6px 14px; border-radius: 10px; cursor: pointer; border: none; transition: 0.2s; font-size: 0.85rem; box-shadow: 0 2px 6px rgba(220,38,38,0.3); }
+  .spanish-btn:hover { transform: scale(1.05); filter: brightness(1.1); }
+  .spanish-btn:active { transform: scale(0.95); }
+
+  /* ===== TOAST ===== */
+  .toast { position: fixed; top: 130px; left: 50%; transform: translateX(-50%) translateY(-20px); background: white; border-radius: 16px; padding: 16px 28px; box-shadow: 0 15px 40px rgba(0,0,0,0.25); font-weight: 700; font-size: 1.1rem; z-index: 200; opacity: 0; transition: opacity .3s, transform .3s; pointer-events: none; max-width: 90%; text-align: center; }
+  .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+  .toast.warning-1 { border-left: 8px solid #eab308; color: #854d0e; }
+  .toast.warning-2 { border-left: 8px solid #f97316; color: #9a3412; }
+
+  /* ===== PENALTY MODAL ===== */
+  .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.7); display: flex; align-items: center; justify-content: center; z-index: 300; opacity: 0; pointer-events: none; transition: opacity .3s; padding: 20px; }
+  .modal-overlay.show { opacity: 1; pointer-events: auto; }
+  .modal-card { background: white; border-radius: 24px; padding: 32px; max-width: 600px; width: 100%; box-shadow: 0 25px 60px rgba(0,0,0,0.4); border-top: 10px solid #dc2626; transform: scale(0.9); transition: transform .3s; max-height: 90vh; overflow-y: auto; }
+  .modal-overlay.show .modal-card { transform: scale(1); }
+  .modal-card.eruption { border-top-color: #7c2d12; background: linear-gradient(180deg, #fef3c7, #ffffff); }
+
+  .scope-badge { display: inline-block; padding: 6px 14px; border-radius: 99px; font-weight: 700; font-size: 0.8rem; margin: 4px; }
+  .scope-person { background: #fef3c7; color: #92400e; }
+  .scope-group { background: #fed7aa; color: #9a3412; }
+  .scope-class { background: #fecaca; color: #991b1b; }
+  .category-badge { display: inline-block; padding: 6px 14px; border-radius: 99px; font-weight: 700; font-size: 0.8rem; margin: 4px; }
+  .category-silly { background: #dbeafe; color: #1e40af; }
+  .category-productive { background: #dcfce7; color: #166534; }
+  .category-eruption { background: #fca5a5; color: #7f1d1d; }
+
+  .penalty-text { font-size: 1.15rem; font-weight: 700; color: #1f2937; padding: 18px; background: #f9fafb; border-radius: 14px; margin-top: 12px; line-height: 1.5; }
+
+  .roll-btn { background: linear-gradient(135deg, #7c3aed, #6d28d9); color: white; font-weight: 800; padding: 12px 24px; border-radius: 12px; border: none; cursor: pointer; transition: 0.2s; font-size: 1rem; }
+  .roll-btn:hover { transform: scale(1.03); filter: brightness(1.1); }
+  .accept-btn { background: linear-gradient(135deg, #16a34a, #15803d); color: white; font-weight: 800; padding: 12px 32px; border-radius: 12px; border: none; cursor: pointer; transition: 0.2s; font-size: 1rem; }
+  .accept-btn:hover { transform: scale(1.03); filter: brightness(1.1); }
+
+  /* ===== REWARD MODAL ===== */
+  .reward-card { text-align: center; }
+
+  /* Shake animation */
+  @keyframes shake { 0%,100% { transform: translateX(0); } 20%,60% { transform: translateX(-4px); } 40%,80% { transform: translateX(4px); } }
+  .shaking { animation: shake 0.5s; }
+</style>
+</head>
+<body class="h-screen flex flex-col">
+
+<!-- ========== HEADER ========== -->
+<header class="flex-shrink-0 bg-white border-b-2 border-purple-200 z-40 shadow-sm">
+  <!-- Row 1 -->
+  <div class="flex items-center justify-between px-4 py-2">
+    <div class="flex items-center gap-3">
+      <button onclick="toggleMenu()" class="text-purple-600 text-2xl font-bold px-2 hover:bg-purple-100 rounded-lg transition">☰</button>
+      <img src="https://www.colomboamericano.edu.co/wp-content/uploads/2024/06/Logo-Colombo-Horizontal.png" alt="Colombo Americano" class="h-9 object-contain" />
+    </div>
+    <div class="text-center hidden md:block">
+      <p class="text-xs font-bold text-purple-500 uppercase tracking-wider">Unit 5 • Favourite Fashions</p>
+      <p class="text-sm font-bold text-gray-700">Class 5 – Present Passive & Processes</p>
+    </div>
+    <div class="flex items-center gap-2">
+      <span id="star-tracker" class="text-xs font-bold text-amber-600 bg-amber-50 px-2 py-1 rounded-full">⭐ Session: 0</span>
+      <span id="slide-counter" class="badge">1 / 13</span>
+    </div>
+  </div>
+  <!-- Row 2: Volcano Controls -->
+  <div class="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-purple-50 via-red-50 to-orange-50 border-t border-purple-200">
+    <span class="text-2xl" id="volcano-emoji">🌋</span>
+    <div class="volcano-container">
+      <div class="volcano-track">
+        <div id="volcano-fill" class="volcano-fill level-1"></div>
+      </div>
+      <span id="volcano-percent" class="font-bold text-gray-700 text-sm w-12 text-right">0%</span>
+    </div>
+    <button class="spanish-btn" onclick="clickSpanish()" title="Click every time you hear Spanish">🚨 I Heard Spanish!</button>
+    <button onclick="resetVolcano()" class="bg-gray-200 hover:bg-gray-300 text-gray-700 font-bold px-3 py-1.5 rounded-lg text-sm transition" title="Reset the volcano">↺ Reset</button>
+    <button onclick="showReward()" class="bg-amber-400 hover:bg-amber-500 text-amber-900 font-bold px-3 py-1.5 rounded-lg text-sm transition" title="See end-of-class reward">🏁 End Class</button>
+  </div>
+  <!-- Progress bar -->
+  <div class="h-1 bg-purple-100">
+    <div id="progress-bar" class="h-full bg-gradient-to-r from-purple-500 to-indigo-500" style="width: 7%"></div>
+  </div>
+</header>
+
+<!-- MENU -->
+<div id="menu-panel" class="menu-panel">
+  <div class="p-4 bg-purple-600 text-white">
+    <p class="font-bold text-lg">Slide Menu</p>
+    <p class="text-xs text-purple-100">Click any slide to jump</p>
+  </div>
+  <button class="menu-item" onclick="goToSlide(0)">1. Cover</button>
+  <button class="menu-item" onclick="goToSlide(1)">2. Warm-up: Move It! Say It!</button>
+  <button class="menu-item" onclick="goToSlide(2)">3. Grammar: Central Card</button>
+  <button class="menu-item" onclick="goToSlide(3)">4. Grammar: Rules & Examples</button>
+  <button class="menu-item" onclick="goToSlide(4)">5. Grammar: Board Work</button>
+  <button class="menu-item" onclick="goToSlide(5)">6. Grammar: Transform It!</button>
+  <button class="menu-item" onclick="goToSlide(6)">7. Listening Part 5</button>
+  <button class="menu-item" onclick="goToSlide(7)">8. Process: How Shoes Are Made</button>
+  <button class="menu-item" onclick="goToSlide(8)">9. Guess the Process!</button>
+  <button class="menu-item" onclick="goToSlide(9)">10. Culture + Game</button>
+  <button class="menu-item" onclick="goToSlide(10)">11. Poster Instructions</button>
+  <button class="menu-item" onclick="goToSlide(11)">12. Poster Template</button>
+  <button class="menu-item" onclick="goToSlide(12)">13. Closing</button>
+</div>
+<div id="menu-overlay" class="fixed inset-0 bg-black/30 hidden z-50" onclick="toggleMenu()"></div>
+
+<!-- TOAST -->
+<div id="toast" class="toast"></div>
+
+<!-- PENALTY MODAL -->
+<div id="penalty-modal" class="modal-overlay">
+  <div class="modal-card" id="penalty-card">
+    <div class="text-center mb-3">
+      <span id="penalty-level-badge" class="badge">LEVEL 3</span>
+    </div>
+    <h2 id="penalty-title" class="text-center text-3xl font-bold text-red-700 mb-3">🌋 PENALTY!</h2>
+    <div class="text-center">
+      <span id="penalty-scope" class="scope-badge scope-person">👤 Person</span>
+      <span id="penalty-category" class="category-badge category-silly">🎪 Silly</span>
+    </div>
+    <div id="penalty-text" class="penalty-text"></div>
+    <div id="reveal-answer-wrapper" class="hidden mt-3 text-center">
+      <button onclick="revealPenaltyAnswer()" class="bg-amber-500 text-white font-bold px-5 py-2 rounded-full text-sm hover:bg-amber-600 transition">🔎 Reveal Answer</button>
+      <div id="reveal-answer-text" class="hidden mt-3 p-3 bg-green-100 rounded-xl text-sm font-semibold text-green-700"></div>
+    </div>
+    <div class="flex justify-center gap-3 mt-5 flex-wrap">
+      <button class="roll-btn" onclick="rerollPenalty()">🎲 Roll New</button>
+      <button class="accept-btn" onclick="closePenaltyModal()">✅ Accept & Close</button>
+    </div>
+  </div>
+</div>
+<!-- REWARD MODAL -->
+<div id="reward-modal" class="modal-overlay">
+  <div class="modal-card reward-card">
+    <div id="reward-content"></div>
+    <button class="accept-btn mt-6" onclick="closeRewardModal()">Close</button>
+  </div>
+</div>
+
+<main class="flex-1 relative overflow-hidden">
+
+<!-- SLIDE 1: COVER -->
+<section class="slide active">
+  <div class="max-w-4xl mx-auto">
+    <div class="transition-top">
+      🎬 <strong>Welcome to Class 5!</strong> Today we are going to learn how to describe <strong>processes</strong> — how things are made! We'll warm up with a fun game, work on the board, and discover how shoes and clothes are made step by step.
+    </div>
+    <div class="bg-gradient-to-r from-purple-600 to-indigo-600 rounded-3xl p-8 md:p-12 text-white shadow-2xl border-b-8 border-purple-300 text-center">
+      <h1 class="text-5xl md:text-6xl font-bold mb-3 drop-shadow-lg">👗 Unit 5</h1>
+      <h2 class="text-3xl md:text-4xl font-bold text-purple-100 mb-6">Favourite Fashions</h2>
+      <p class="text-xl font-semibold text-purple-100">Class 5 – Describing Processes with the Passive</p>
+      <div class="mt-8 bg-white/20 p-5 rounded-2xl backdrop-blur-sm border border-white/30 text-left">
+        <h3 class="text-2xl font-bold text-purple-100 mb-3">🎯 Today's Mission</h3>
+        <ul class="grid grid-cols-1 md:grid-cols-2 gap-2 text-white font-semibold">
+          <li>✓ Warm up with an active game</li>
+          <li>✓ Review the <strong>Present Passive</strong></li>
+          <li>✓ Describe <strong>processes</strong> step by step</li>
+          <li>✓ Create a poster about traditional clothes</li>
+        </ul>
+      </div>
+      <div class="mt-6 text-sm text-purple-100 bg-red-500/40 p-3 rounded-xl border border-red-300/50">
+        🌋 <strong>Watch out!</strong> The volcano in the header is watching. Every time the teacher hears Spanish, it grows. Don't let it erupt!
+      </div>
+    </div>
+    <div class="transition-bottom">
+      ➡️ <strong>Ready to move?</strong> In the next slide we're going to warm up with a game that will get you out of your seats! Let's go!
+    </div>
+  </div>
+</section>
+
+<!-- SLIDE 2: WARM-UP -->
+<section class="slide">
+  <div class="max-w-5xl mx-auto">
+    <div class="transition-top">
+      🎮 <strong>Warm-Up: Move It! Say It!</strong> We'll start with a game to wake up our bodies and our English. Listen carefully, move fast, and speak in English. Ready?
+    </div>
+    <div class="flex items-center gap-3 mb-3">
+      <span class="text-3xl">🏃</span>
+      <h2 class="text-3xl text-yellow-600">Warm-Up: Move It! Say It!</h2>
+      <span class="ml-auto badge bg-yellow-500">15 min</span>
+    </div>
+    <div class="bg-yellow-50 p-5 rounded-2xl border-2 border-yellow-200 mb-4">
+      <h3 class="font-bold text-yellow-800 text-lg mb-2">🔵 Round 1 – Listen & Move</h3>
+      <p class="text-sm text-gray-600 mb-3">Listen to the command and do the action. If the sentence is true for you, do it!</p>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-2 text-sm">
+        <div class="bg-white p-3 rounded-xl border border-yellow-200">🟦 "If you're wearing blue, <strong>jump</strong>!"</div>
+        <div class="bg-white p-3 rounded-xl border border-yellow-200">👟 "If you have shoes on, <strong>stand up</strong>!"</div>
+        <div class="bg-white p-3 rounded-xl border border-yellow-200">⚫ "If you're wearing black, <strong>wave your hands</strong>!"</div>
+        <div class="bg-white p-3 rounded-xl border border-yellow-200">🧢 "If you have a hat, <strong>touch your head</strong>!"</div>
+        <div class="bg-white p-3 rounded-xl border border-yellow-200">👕 "If you're wearing a T-shirt, <strong>spin around</strong>!"</div>
+        <div class="bg-white p-3 rounded-xl border border-yellow-200">👖 "If you're wearing jeans, <strong>touch your toes</strong>!"</div>
+      </div>
+    </div>
+    <div class="bg-pink-50 p-5 rounded-2xl border-2 border-pink-200 mb-4">
+      <h3 class="font-bold text-pink-800 text-lg mb-2">🟣 Round 2 – Your Turn to Command</h3>
+      <p class="text-sm text-gray-600 mb-2">In pairs, take turns giving your own "If you're wearing..." command. Your partner must do the action!</p>
+      <div class="help-phrases text-xs">
+        <p><strong>💬 Sentence starter:</strong> "If you're wearing ______, ______!"</p>
+      </div>
+    </div>
+    <div class="bg-purple-50 p-5 rounded-2xl border-2 border-purple-200">
+      <h3 class="font-bold text-purple-800 text-lg mb-2">🟠 Round 3 – Category Battle</h3>
+      <p class="text-sm text-gray-600 mb-2">Two teams. Teacher says a category. Race to name <strong>5 items</strong> in that category. First team to finish wins a point!</p>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-2 text-sm">
+        <div class="bg-white p-3 rounded-xl border border-purple-200">1. 5 things you wear on your <strong>feet</strong></div>
+        <div class="bg-white p-3 rounded-xl border border-purple-200">2. 5 things you wear in <strong>summer</strong></div>
+        <div class="bg-white p-3 rounded-xl border border-purple-200">3. 5 things you wear in <strong>winter</strong></div>
+        <div class="bg-white p-3 rounded-xl border border-purple-200">4. 5 <strong>accessories</strong></div>
+      </div>
+    </div>
+    <div class="transition-bottom">
+      ➡️ <strong>Excellent energy!</strong> Now let's look at a really useful structure we already know: the <strong>Present Passive</strong>. We'll use it today to describe how things are made!
+    </div>
+  </div>
+</section>
+
+<!-- SLIDE 3: GRAMMAR CENTRAL CARD -->
+<section class="slide">
+  <div class="max-w-5xl mx-auto">
+    <div class="transition-top">
+      👀 <strong>Look at this sentence!</strong> The Present Passive describes things without saying who does the action. Each part has a different colour and a different job. Let's look together!
+    </div>
+    <div class="flex items-center gap-3 mb-3">
+      <span class="text-3xl">📐</span>
+      <h2 class="text-3xl text-purple-600">Grammar: The Present Passive</h2>
+      <span class="ml-auto badge">30 min</span>
+    </div>
+    <div class="grammar-central-card mb-4">
+      <div class="grammar-sentence-display">
+        <span class="subject-part">The crown</span>
+        <span class="verb-part">is</span>
+        <span class="participle-part">made</span>
+        <span class="extra-part">of gold.</span>
+      </div>
+      <div class="grid grid-cols-4 gap-3 mt-4 text-center">
+        <div><div class="text-2xl text-yellow-500 mb-1">↓</div><div class="arrow-label arrow-subject">SUBJECT</div><p class="text-xs text-gray-600 mt-1">The object we talk about.</p></div>
+        <div><div class="text-2xl text-blue-500 mb-1">↓</div><div class="arrow-label arrow-verb">BE</div><p class="text-xs text-gray-600 mt-1">is / are / am</p></div>
+        <div><div class="text-2xl text-green-500 mb-1">↓</div><div class="arrow-label arrow-participle">PARTICIPLE</div><p class="text-xs text-gray-600 mt-1">made, worn, used, called</p></div>
+        <div><div class="text-2xl text-pink-500 mb-1">↓</div><div class="arrow-label arrow-extra">EXTRA</div><p class="text-xs text-gray-600 mt-1">of gold, by princesses…</p></div>
+      </div>
+      <div class="mt-4 p-3 bg-purple-100 rounded-2xl text-center">
+        <p class="text-sm font-bold text-purple-800">📐 FORMULA:</p>
+        <p class="text-xl font-bold text-purple-700 mt-1">SUBJECT + <span class="text-blue-600">BE</span> + <span class="text-green-600">PAST PARTICIPLE</span> + <span class="text-pink-600">EXTRA INFO</span></p>
+      </div>
+    </div>
+    <div class="transition-bottom">
+      ➡️ <strong>Do you notice the pattern?</strong> Let's compare it with the Active Voice and look at more examples so you can see how it works.
+    </div>
+  </div>
+</section>
+
+<!-- SLIDE 4: GRAMMAR RULES -->
+<section class="slide">
+  <div class="max-w-5xl mx-auto">
+    <div class="transition-top">
+      🔍 <strong>Active vs Passive.</strong> In Active Voice, the person is important. In Passive Voice, the action and the object are important. Look at the differences!
+    </div>
+    <div class="flex items-center gap-3 mb-3">
+      <span class="text-3xl">📊</span>
+      <h2 class="text-3xl text-purple-600">Rules & Examples</h2>
+    </div>
+    <div class="grid grid-cols-2 gap-4 mb-4">
+      <div class="bg-red-50 border-2 border-red-400 rounded-xl p-3">
+        <p class="font-bold text-red-600 mb-1">Active Voice:</p>
+        <p class="text-gray-700 text-sm">People <strong>make</strong> these shoes <strong>in Italy</strong>.</p>
+        <p class="text-gray-700 text-sm mt-1">Princesses <strong>wear</strong> silk dresses.</p>
+      </div>
+      <div class="bg-green-50 border-2 border-green-400 rounded-xl p-3">
+        <p class="font-bold text-green-600 mb-1">Passive Voice:</p>
+        <p class="text-gray-700 text-sm">These shoes <strong>are made</strong> in Italy.</p>
+        <p class="text-gray-700 text-sm mt-1">Silk dresses <strong>are worn</strong> by princesses.</p>
+      </div>
+    </div>
+    <div class="bg-purple-50 rounded-2xl border-2 border-purple-200 p-3 overflow-x-auto">
+      <table class="w-full text-left text-sm">
+        <thead>
+          <tr class="bg-purple-200 text-purple-800">
+            <th class="p-2 rounded-l-lg">Subject</th><th class="p-2">Be</th><th class="p-2">Past Participle</th><th class="p-2 rounded-r-lg">Extra</th>
+          </tr>
+        </thead>
+        <tbody class="bg-white">
+          <tr><td class="p-2 border-b">It</td><td class="p-2 border-b">is</td><td class="p-2 border-b font-bold text-purple-700">called</td><td class="p-2 border-b">silk.</td></tr>
+          <tr><td class="p-2 border-b">They</td><td class="p-2 border-b">are</td><td class="p-2 border-b font-bold text-purple-700">made of</td><td class="p-2 border-b">leather.</td></tr>
+          <tr><td class="p-2 border-b">It</td><td class="p-2 border-b">is</td><td class="p-2 border-b font-bold text-purple-700">used to</td><td class="p-2 border-b">make dresses.</td></tr>
+          <tr><td class="p-2 border-b">They</td><td class="p-2 border-b">are</td><td class="p-2 border-b font-bold text-purple-700">worn by</td><td class="p-2 border-b">princesses.</td></tr>
+          <tr><td class="p-2">Cotton</td><td class="p-2">is</td><td class="p-2 font-bold text-purple-700">grown</td><td class="p-2">in Colombia.</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="grid grid-cols-2 gap-3 mt-3">
+      <div class="bg-purple-50 p-3 rounded-xl border border-purple-200 text-sm">
+        <p class="font-bold text-purple-700">Rule 1:</p>
+        <p>Passive = <strong>be</strong> (am/is/are) + <strong>past participle</strong>.</p>
+      </div>
+      <div class="bg-purple-50 p-3 rounded-xl border border-purple-200 text-sm">
+        <p class="font-bold text-purple-700">Rule 2:</p>
+        <p>Use it when the <strong>action</strong> is more important than the person.</p>
+      </div>
+    </div>
+    <div class="mt-3 bg-purple-50 p-3 rounded-xl border-2 border-purple-200">
+      <p class="text-sm">Complete the rules in your book (p.65, Act.4).</p>
+      <button onclick="toggle('rules-ans')" class="mt-2 bg-purple-500 text-white px-5 py-2 rounded-full text-sm">🔍 Reveal Answers</button>
+      <div id="rules-ans" class="hidden mt-2 p-3 bg-green-100 rounded-xl text-sm font-semibold text-green-700">✅ 1. <strong>be</strong> &nbsp; ✅ 2. <strong>more</strong></div>
+    </div>
+    <div class="transition-bottom">
+      ➡️ <strong>Time to practise!</strong> I'll call some of you to the board. Write the passive form of the sentence and the class will help. Let's see who's ready!
+    </div>
+  </div>
+</section>
+
+<!-- SLIDE 5: BOARD WORK -->
+<section class="slide">
+  <div class="max-w-5xl mx-auto">
+    <div class="transition-top">
+      ✍️ <strong>Come to the board!</strong> I'll call you one by one. Change the active sentence into the passive and write it on the board. Your classmates will help. Ready?
+    </div>
+    <div class="flex items-center gap-3 mb-3">
+      <span class="text-3xl">✏️</span>
+      <h2 class="text-3xl text-purple-600">Board Work</h2>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-2">
+      <div>
+        <div class="board-work-item"><span>1. People make jeans in many countries.</span><button onclick="toggle('p1')" class="bg-purple-500 text-white px-3 py-1 rounded-full text-xs">🔍</button></div>
+        <div id="p1" class="hidden p-2 bg-green-100 rounded-lg text-xs font-semibold text-green-700 mb-2">✅ Jeans are made in many countries.</div>
+        <div class="board-work-item"><span>2. Princesses wear silk dresses.</span><button onclick="toggle('p2')" class="bg-purple-500 text-white px-3 py-1 rounded-full text-xs">🔍</button></div>
+        <div id="p2" class="hidden p-2 bg-green-100 rounded-lg text-xs font-semibold text-green-700 mb-2">✅ Silk dresses are worn by princesses.</div>
+        <div class="board-work-item"><span>3. They sell clothes in the town.</span><button onclick="toggle('p3')" class="bg-purple-500 text-white px-3 py-1 rounded-full text-xs">🔍</button></div>
+        <div id="p3" class="hidden p-2 bg-green-100 rounded-lg text-xs font-semibold text-green-700 mb-2">✅ Clothes are sold in the town.</div>
+        <div class="board-work-item"><span>4. People play football in the square.</span><button onclick="toggle('p4')" class="bg-purple-500 text-white px-3 py-1 rounded-full text-xs">🔍</button></div>
+        <div id="p4" class="hidden p-2 bg-green-100 rounded-lg text-xs font-semibold text-green-700 mb-2">✅ Football is played in the square.</div>
+      </div>
+      <div>
+        <div class="board-work-item"><span>5. Workers pick the cotton.</span><button onclick="toggle('p5')" class="bg-purple-500 text-white px-3 py-1 rounded-full text-xs">🔍</button></div>
+        <div id="p5" class="hidden p-2 bg-green-100 rounded-lg text-xs font-semibold text-green-700 mb-2">✅ The cotton is picked by workers.</div>
+        <div class="board-work-item"><span>6. People grow cotton in Colombia.</span><button onclick="toggle('p6')" class="bg-purple-500 text-white px-3 py-1 rounded-full text-xs">🔍</button></div>
+        <div id="p6" class="hidden p-2 bg-green-100 rounded-lg text-xs font-semibold text-green-700 mb-2">✅ Cotton is grown in Colombia.</div>
+        <div class="board-work-item"><span>7. Someone cleans the cotton.</span><button onclick="toggle('p7')" class="bg-purple-500 text-white px-3 py-1 rounded-full text-xs">🔍</button></div>
+        <div id="p7" class="hidden p-2 bg-green-100 rounded-lg text-xs font-semibold text-green-700 mb-2">✅ The cotton is cleaned.</div>
+        <div class="board-work-item"><span>8. People use leather to make shoes.</span><button onclick="toggle('p8')" class="bg-purple-500 text-white px-3 py-1 rounded-full text-xs">🔍</button></div>
+        <div id="p8" class="hidden p-2 bg-green-100 rounded-lg text-xs font-semibold text-green-700 mb-2">✅ Leather is used to make shoes.</div>
+      </div>
+    </div>
+    <div class="transition-bottom">
+      ➡️ <strong>Fantastic work!</strong> Now let's test how fast you can transform sentences in a game!
+    </div>
+  </div>
+</section>
+
+<!-- SLIDE 6: TRANSFORM IT GAME -->
+<section class="slide">
+  <div class="max-w-3xl mx-auto">
+    <div class="transition-top">
+      🎮 <strong>Game: Transform It!</strong> I'll show you an active sentence. You have <strong>10 seconds</strong> to write the passive form on your whiteboard. When I say "Show me!", hold it up. Ready?
+    </div>
+    <div class="flex items-center gap-3 mb-4">
+      <span class="text-3xl">🎮</span>
+      <h2 class="text-3xl text-purple-600">Transform It!</h2>
+    </div>
+    <div class="bg-pink-50 border-2 border-pink-300 rounded-2xl p-6">
+      <p class="text-gray-700 text-center mb-4">10 seconds per sentence. Whiteboards ready!</p>
+      <div class="bg-white p-6 rounded-xl shadow-inner text-center min-h-[100px] flex items-center justify-center">
+        <p id="game-sentence" class="text-2xl font-bold text-gray-800">Click "Next Sentence" to start!</p>
+      </div>
+      <div class="flex gap-2 mt-4 justify-center">
+        <button onclick="nextGameSentence()" class="bg-purple-600 text-white px-6 py-2 rounded-full hover:bg-purple-700">🔄 Next</button>
+        <button onclick="revealGameAnswer()" class="bg-green-500 text-white px-6 py-2 rounded-full hover:bg-green-600">🔍 Reveal</button>
+      </div>
+      <div id="game-answer" class="mt-3 text-center text-lg font-bold text-green-600 min-h-[30px]"></div>
+    </div>
+    <div class="transition-bottom">
+      ➡️ <strong>You're getting fast!</strong> Now let's listen to how clothes are really made. Open your books to page 65, Activity 5.
+    </div>
+  </div>
+</section>
+
+<!-- SLIDE 7: LISTENING PART 5 -->
+<section class="slide">
+  <div class="max-w-5xl mx-auto">
+    <div class="transition-top">
+      🎧 <strong>Listening Time!</strong> You will hear a podcast about cotton. Listen carefully and write 4 sentences about how cotton clothes are made. Use the verbs: <strong>pick, clean, make, send</strong>.
+    </div>
+    <div class="flex items-center gap-3 mb-3">
+      <span class="text-3xl">🎧</span>
+      <h2 class="text-3xl text-rose-600">Listening – Podcast about Cotton (p.65, Act.5)</h2>
+      <span class="ml-auto badge bg-rose-500">15 min</span>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div class="bg-rose-50 p-5 rounded-2xl border-2 border-rose-200">
+        <h3 class="font-bold text-rose-800 mb-2">🎧 Before Listening</h3>
+        <p class="text-sm text-gray-600 mb-3">These verbs will help you understand the podcast:</p>
+        <div class="bg-white p-3 rounded-xl text-sm">
+          <p>• <strong>pick</strong> = to take from the plant</p>
+          <p>• <strong>clean</strong> = to remove dirt</p>
+          <p>• <strong>make</strong> = to create fabric</p>
+          <p>• <strong>send</strong> = to transport to shops</p>
+        </div>
+      </div>
+      <div class="bg-blue-50 p-5 rounded-2xl border-2 border-blue-200">
+        <h3 class="font-bold text-blue-800 mb-2">🎧 After Listening</h3>
+        <p class="text-sm text-gray-600 mb-3">Compare your sentences with these sample answers.</p>
+        <button onclick="toggle('listen-ans')" class="bg-rose-500 text-white px-4 py-2 rounded-full text-sm w-full">🔍 Sample Answers</button>
+        <div id="listen-ans" class="hidden mt-3 p-3 bg-green-100 rounded-xl text-xs font-semibold text-green-700">
+          ✅ 1. The cotton is picked by workers.<br>
+          ✅ 2. The cotton is cleaned.<br>
+          ✅ 3. The cotton is made into fabric.<br>
+          ✅ 4. The clothes are sent to shops.
+        </div>
+      </div>
+    </div>
+    <div class="transition-bottom">
+      ➡️ <strong>Now let's SEE the process!</strong> On the next slide you'll see how a pair of shoes is made — step by step. Can you describe each step using the Passive? Let's find out!
+    </div>
+  </div>
+</section>
+
+<!-- SLIDE 8: PROCESS - HOW SHOES ARE MADE -->
+<section class="slide">
+  <div class="max-w-5xl mx-auto">
+    <div class="transition-top">
+      👟 <strong>How are shoes made?</strong> Look at the emojis. Each step shows part of the process. Some steps are already written for you. Others have blanks — you need to complete them with the Passive! Write your answers in your notebook.
+    </div>
+    <div class="flex items-center gap-3 mb-3">
+      <span class="text-3xl">👟</span>
+      <h2 class="text-3xl text-green-600">Describing a Process: How Shoes Are Made</h2>
+    </div>
+    <div class="space-y-2">
+      <div class="process-step"><span class="emoji">🐄</span><div class="text"><strong>Step 1:</strong> Leather <strong>is collected</strong> from farms.</div></div>
+      <div class="process-step"><span class="emoji">🧼</span><div class="text"><strong>Step 2:</strong> The leather <strong>is cleaned</strong> with water and soap.</div></div>
+      <div class="process-step blurred"><span class="emoji">🎨</span><div class="text"><strong>Step 3:</strong> The leather ________ (dye) with different colours.</div><button onclick="toggle('proc-3')" class="ml-auto bg-purple-500 text-white px-3 py-1 rounded-full text-xs">🔍</button></div>
+      <div id="proc-3" class="hidden p-2 bg-green-100 rounded-lg text-xs font-semibold text-green-700 mb-2">✅ The leather <strong>is dyed</strong> with different colours.</div>
+      <div class="process-step blurred"><span class="emoji">✂️</span><div class="text"><strong>Step 4:</strong> The leather ________ (cut) into shapes.</div><button onclick="toggle('proc-4')" class="ml-auto bg-purple-500 text-white px-3 py-1 rounded-full text-xs">🔍</button></div>
+      <div id="proc-4" class="hidden p-2 bg-green-100 rounded-lg text-xs font-semibold text-green-700 mb-2">✅ The leather <strong>is cut</strong> into shapes.</div>
+      <div class="process-step blurred"><span class="emoji">🪡</span><div class="text"><strong>Step 5:</strong> The pieces ________ (sew) together.</div><button onclick="toggle('proc-5')" class="ml-auto bg-purple-500 text-white px-3 py-1 rounded-full text-xs">🔍</button></div>
+      <div id="proc-5" class="hidden p-2 bg-green-100 rounded-lg text-xs font-semibold text-green-700 mb-2">✅ The pieces <strong>are sewn</strong> together.</div>
+      <div class="process-step"><span class="emoji">👟</span><div class="text"><strong>Step 6:</strong> The shoes <strong>are finished</strong> and checked.</div></div>
+      <div class="process-step blurred"><span class="emoji">📦</span><div class="text"><strong>Step 7:</strong> The shoes ________ (pack) into boxes.</div><button onclick="toggle('proc-7')" class="ml-auto bg-purple-500 text-white px-3 py-1 rounded-full text-xs">🔍</button></div>
+      <div id="proc-7" class="hidden p-2 bg-green-100 rounded-lg text-xs font-semibold text-green-700 mb-2">✅ The shoes <strong>are packed</strong> into boxes.</div>
+      <div class="process-step blurred"><span class="emoji">🚚</span><div class="text"><strong>Step 8:</strong> The boxes ________ (send) to shops.</div><button onclick="toggle('proc-8')" class="ml-auto bg-purple-500 text-white px-3 py-1 rounded-full text-xs">🔍</button></div>
+      <div id="proc-8" class="hidden p-2 bg-green-100 rounded-lg text-xs font-semibold text-green-700 mb-2">✅ The boxes <strong>are sent</strong> to shops.</div>
+      <div class="process-step"><span class="emoji">🛍️</span><div class="text"><strong>Step 9:</strong> The shoes <strong>are sold</strong> to customers.</div></div>
+    </div>
+    <div class="help-phrases mt-4">
+      <p class="font-bold">💬 Help Phrases for describing processes:</p>
+      <p class="text-sm">"First, the material is..." • "Then, it is..." • "Next, it is..." • "After that, it is..." • "Finally, it is..."</p>
+    </div>
+    <div class="transition-bottom">
+      ➡️ <strong>Now it's your turn!</strong> On the next slide you will see <strong>more processes</strong> — but this time, we'll hide the sentences. You must guess what they are and describe them!
+    </div>
+  </div>
+</section>
+
+<!-- SLIDE 9: GUESS THE PROCESS -->
+<section class="slide">
+  <div class="max-w-5xl mx-auto">
+    <div class="transition-top">
+      🕵️ <strong>Guess the Process!</strong> Each box shows a process with emojis but no words. In groups, guess what the process is and describe the steps using the Passive. Write your ideas in your notebook, then click to reveal!
+    </div>
+    <div class="flex items-center gap-3 mb-3">
+      <span class="text-3xl">🕵️</span>
+      <h2 class="text-3xl text-blue-600">Guess the Process!</h2>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div class="bg-yellow-50 p-4 rounded-2xl border-2 border-yellow-200">
+        <h3 class="font-bold text-yellow-800 mb-2">Process 1</h3>
+        <div class="text-2xl text-center mb-3">🌾 → 🍚 → 🥣 → 🔥 → 🍞</div>
+        <p class="text-xs text-gray-500 mb-2">Hint: morning food!</p>
+        <button onclick="toggle('proc-bread')" class="bg-yellow-500 text-white px-4 py-1 rounded-full text-xs w-full">🔍 Reveal</button>
+        <div id="proc-bread" class="hidden mt-2 p-2 bg-green-100 rounded-lg text-xs font-semibold text-green-700">
+          ✅ <strong>Making bread:</strong> The wheat is grown. The flour is made. The dough is mixed. The bread is baked. The bread is sold.
+        </div>
+      </div>
+      <div class="bg-amber-50 p-4 rounded-2xl border-2 border-amber-200">
+        <h3 class="font-bold text-amber-800 mb-2">Process 2</h3>
+        <div class="text-2xl text-center mb-3">🌱 → ☕ → 🔥 → ⚫ → 🥤</div>
+        <p class="text-xs text-gray-500 mb-2">Hint: hot drink!</p>
+        <button onclick="toggle('proc-coffee')" class="bg-amber-500 text-white px-4 py-1 rounded-full text-xs w-full">🔍 Reveal</button>
+        <div id="proc-coffee" class="hidden mt-2 p-2 bg-green-100 rounded-lg text-xs font-semibold text-green-700">
+          ✅ <strong>Making coffee:</strong> The beans are grown. The beans are picked. The beans are roasted. The beans are ground. Hot water is added. The coffee is served.
+        </div>
+      </div>
+      <div class="bg-orange-50 p-4 rounded-2xl border-2 border-orange-200">
+        <h3 class="font-bold text-orange-800 mb-2">Process 3</h3>
+        <div class="text-2xl text-center mb-3">🌳 → 🥥 → 🔥 → 🍫</div>
+        <p class="text-xs text-gray-500 mb-2">Hint: sweet treat!</p>
+        <button onclick="toggle('proc-choc')" class="bg-orange-500 text-white px-4 py-1 rounded-full text-xs w-full">🔍 Reveal</button>
+        <div id="proc-choc" class="hidden mt-2 p-2 bg-green-100 rounded-lg text-xs font-semibold text-green-700">
+          ✅ <strong>Making chocolate:</strong> The cocoa is grown. The beans are picked. The beans are roasted. The chocolate is made and wrapped.
+        </div>
+      </div>
+      <div class="bg-blue-50 p-4 rounded-2xl border-2 border-blue-200">
+        <h3 class="font-bold text-blue-800 mb-2">Process 4</h3>
+        <div class="text-2xl text-center mb-3">🌳 → 📄 → ✏️ → 📖 → 📚</div>
+        <p class="text-xs text-gray-500 mb-2">Hint: school item!</p>
+        <button onclick="toggle('proc-book')" class="bg-blue-500 text-white px-4 py-1 rounded-full text-xs w-full">🔍 Reveal</button>
+        <div id="proc-book" class="hidden mt-2 p-2 bg-green-100 rounded-lg text-xs font-semibold text-green-700">
+          ✅ <strong>Making a book:</strong> The trees are cut. Paper is made. The pages are printed. The pages are sewn. The book is sold.
+        </div>
+      </div>
+    </div>
+    <div class="bg-purple-50 p-4 rounded-2xl border-2 border-purple-200 mt-4">
+      <h3 class="font-bold text-purple-800 mb-2">🎯 Now, in groups — Your Turn!</h3>
+      <p class="text-sm text-gray-600 mb-2">Choose ONE process (real or imaginary) and describe the steps in your notebook using the Passive. Then share with another group!</p>
+      <div class="help-phrases text-xs"><p><strong>Ideas:</strong> making a cake • making a T-shirt • making orange juice • building a house</p></div>
+    </div>
+    <div class="transition-bottom">
+      ➡️ <strong>Excellent!</strong> You can now describe processes in English! Let's change topic and learn about traditional clothes around the world.
+    </div>
+  </div>
+</section>
+
+<!-- SLIDE 10: CULTURE + GAME -->
+<section class="slide">
+  <div class="max-w-4xl mx-auto">
+    <div class="transition-top">
+      🌍 <strong>Traditional Clothes Around the World.</strong> Let's read about clothes that people wear in different countries. Then we'll play a matching game!
+    </div>
+    <div class="flex items-center gap-3 mb-3">
+      <span class="text-3xl">🌍</span>
+      <h2 class="text-3xl text-indigo-600">Culture + Game</h2>
+      <span class="ml-auto badge bg-indigo-500">15 min</span>
+    </div>
+    <div class="bg-indigo-50 p-4 rounded-2xl border-2 border-indigo-200 mb-3">
+      <p class="text-gray-700 text-center py-3 text-sm">
+        📖 <strong>Reading:</strong> Please refer to Lesson 6 – Culture in your book.<br>
+        <span class="text-xs text-gray-500">(Reading text and questions will be added here.)</span>
+      </p>
+    </div>
+    <div class="bg-purple-50 p-4 rounded-2xl border-2 border-purple-200">
+      <h3 class="font-bold text-purple-800 mb-2">🎮 Match the Country to the Outfit</h3>
+      <div class="grid grid-cols-2 gap-4">
+        <div class="space-y-2">
+          <div class="culture-match" data-pair="1" onclick="selectCultureMatch(this)">🇯🇵 Japan</div>
+          <div class="culture-match" data-pair="2" onclick="selectCultureMatch(this)">🇮🇳 India</div>
+          <div class="culture-match" data-pair="3" onclick="selectCultureMatch(this)">🇲🇽 Mexico</div>
+          <div class="culture-match" data-pair="4" onclick="selectCultureMatch(this)">🇬🇧 Scotland</div>
+          <div class="culture-match" data-pair="5" onclick="selectCultureMatch(this)">🇨🇴 Colombia</div>
+        </div>
+        <div class="space-y-2">
+          <div class="culture-match" data-pair="3" onclick="selectCultureMatch(this)">Sombrero & poncho</div>
+          <div class="culture-match" data-pair="5" onclick="selectCultureMatch(this)">La Pollera</div>
+          <div class="culture-match" data-pair="4" onclick="selectCultureMatch(this)">Kilt</div>
+          <div class="culture-match" data-pair="1" onclick="selectCultureMatch(this)">Kimono</div>
+          <div class="culture-match" data-pair="2" onclick="selectCultureMatch(this)">Sari</div>
+        </div>
+      </div>
+      <div id="culture-result" class="mt-3 text-center font-bold"></div>
+      <button onclick="resetCultureMatch()" class="mt-2 bg-gray-400 text-white px-4 py-1 rounded-full text-xs">Reset 🔄</button>
+    </div>
+    <div class="transition-bottom">
+      ➡️ <strong>Great work!</strong> Now it's your turn to be creative. You will create your own poster about a traditional outfit and design a new one for your region!
+    </div>
+  </div>
+</section>
+
+<!-- SLIDE 11: POSTER INSTRUCTIONS -->
+<section class="slide">
+  <div class="max-w-4xl mx-auto">
+    <div class="transition-top">
+      🎨 <strong>Your Creative Mission!</strong> In pairs, you will create a poster about a traditional outfit from Colombia. Then, you will design a NEW outfit for your region or city. Follow the steps carefully!
+    </div>
+    <div class="flex items-center gap-3 mb-3">
+      <span class="text-3xl">🎨</span>
+      <h2 class="text-3xl text-rose-600">Poster Instructions</h2>
+      <span class="ml-auto badge bg-rose-500">20 min</span>
+    </div>
+    <div class="bg-rose-50 p-5 rounded-2xl border-2 border-rose-200">
+      <h3 class="font-bold text-rose-700 text-lg mb-2">📋 Your Task</h3>
+      <ol class="list-decimal list-inside text-gray-700 space-y-2">
+        <li><strong>Draw</strong> a traditional outfit from Colombia (or your region).</li>
+        <li><strong>Write the history</strong> (2-3 sentences): Where does it come from? When is it worn? Why is it important?</li>
+        <li><strong>Describe it</strong> (5-6 sentences) using the Present Passive: What is it made of? Who wears it? What is it used for? What colors?</li>
+        <li><strong>Draw a new outfit</strong> for your region (3-4 sentences): Materials, who wears it, why you like it.</li>
+        <li><strong>Present</strong> your poster to another pair or to the class.</li>
+      </ol>
+    </div>
+    <div class="help-phrases mt-3">
+      <p class="font-bold">💬 Help Phrases:</p>
+      <div class="grid grid-cols-3 gap-2 text-xs mt-1">
+        <div><p class="font-bold">Traditional:</p><p>"It is made of…", "It is worn by…", "It is used for…", "The colors are…", "It has…", "People wear it in…"</p></div>
+        <div><p class="font-bold">New Outfit:</p><p>"It is made of…", "It is worn by…", "We designed it for…", "We like it because…"</p></div>
+        <div><p class="font-bold">Presenting:</p><p>"Our outfit is called…", "It is made of…", "We like it because…", "Thank you for listening!"</p></div>
+      </div>
+    </div>
+    <div class="transition-bottom">
+      ➡️ <strong>Here is a template and a sample to help you!</strong> Look at the next slide before you start drawing.
+    </div>
+  </div>
+</section>
+
+<!-- SLIDE 12: POSTER TEMPLATE & SAMPLE -->
+<section class="slide">
+  <div class="max-w-5xl mx-auto">
+    <div class="transition-top">
+      🖼️ <strong>Template & Sample.</strong> Copy this template into your notebook or on paper. Look at the sample to see how to describe the outfit and the history. Then create your own!
+    </div>
+    <div class="flex items-center gap-3 mb-3">
+      <span class="text-3xl">🖼️</span>
+      <h2 class="text-3xl text-rose-600">Poster Template & Sample</h2>
+    </div>
+    <div class="grid grid-cols-2 gap-4">
+      <div class="bg-white border-3 border-rose-400 rounded-2xl p-3 text-xs" style="border-width:3px">
+        <p class="font-bold text-rose-700 mb-2">TRADITIONAL OUTFIT FROM: ______</p>
+        <div class="grid grid-cols-2 gap-2">
+          <div class="border-2 border-dashed border-rose-200 rounded-lg p-3 text-center text-gray-400">[DRAW HERE]<br>Traditional Outfit</div>
+          <div class="space-y-1">
+            <div class="border-2 border-dashed border-rose-200 rounded-lg p-2">
+              <p class="font-bold text-rose-700">📜 HISTORY:</p>
+              <p class="text-gray-500">• It comes from…</p>
+              <p class="text-gray-500">• It is worn during…</p>
+              <p class="text-gray-500">• It is important because…</p>
+            </div>
+            <div class="border-2 border-dashed border-rose-200 rounded-lg p-2">
+              <p class="font-bold text-rose-700">📝 DESCRIPTION:</p>
+              <p class="text-gray-500">• It is made of…</p>
+              <p class="text-gray-500">• It is worn by…</p>
+              <p class="text-gray-500">• It is used for…</p>
+              <p class="text-gray-500">• The colors are…</p>
+            </div>
+          </div>
+        </div>
+        <p class="font-bold text-rose-700 mt-2 mb-2">NEW OUTFIT FOR: ______</p>
+        <div class="grid grid-cols-2 gap-2">
+          <div class="border-2 border-dashed border-rose-200 rounded-lg p-3 text-center text-gray-400">[DRAW HERE]<br>New Outfit</div>
+          <div class="border-2 border-dashed border-rose-200 rounded-lg p-2">
+            <p class="font-bold text-rose-700">📝 DESCRIPTION:</p>
+            <p class="text-gray-500">• It is made of…</p>
+            <p class="text-gray-500">• It is worn by…</p>
+            <p class="text-gray-500">• It is used for…</p>
+            <p class="text-gray-500">• We like it because…</p>
+          </div>
+        </div>
+      </div>
+      <div class="bg-green-50 border-2 border-green-200 rounded-2xl p-3 text-sm">
+        <h3 class="font-bold text-green-800 mb-2">📝 Sample Answer</h3>
+        <p class="font-bold text-green-700">Traditional: La Pollera</p>
+        <p class="text-xs text-gray-600"><strong>History:</strong> La Pollera comes from the Caribbean coast of Colombia. It is worn during traditional festivals. It is important because it represents Colombian culture.</p>
+        <p class="text-xs text-gray-600 mt-1"><strong>Description:</strong> La Pollera is made of cotton and lace. It is worn by women. It is used for dancing. The colors are usually white, red, and yellow.</p>
+        <p class="font-bold text-green-700 mt-2">New Outfit: The Future Caleño</p>
+        <p class="text-xs text-gray-600">Our new outfit is for Cali. It is made of light cotton. It has a bright yellow T-shirt with a salsa design. It is worn by young people at the Feria de Cali. We like it because it is modern and fun.</p>
+      </div>
+    </div>
+    <div class="transition-bottom">
+      ➡️ <strong>Time to create!</strong> Work with your partner, use the template, and don't forget to use the Passive voice. When you're ready, present your poster to another pair!
+    </div>
+  </div>
+</section>
+
+<!-- SLIDE 13: CLOSING -->
+<section class="slide">
+  <div class="max-w-3xl mx-auto">
+    <div class="transition-top">
+      🎉 <strong>What a great class!</strong> Today you learned how to describe <strong>processes</strong> using the Present Passive. Let's review what we did and remember the most important things for next time.
+    </div>
+    <div class="text-center">
+      <div class="bg-gradient-to-r from-purple-600 to-indigo-600 rounded-3xl p-10 text-white shadow-2xl border-b-8 border-purple-300">
+        <h1 class="text-5xl font-bold mb-3">🎉 Great Job!</h1>
+        <p class="text-xl text-purple-100 mb-6">Today you learned the Present Passive for processes!</p>
+        <div class="bg-white/20 p-5 rounded-2xl text-left">
+          <h3 class="text-xl font-bold text-purple-100 mb-2">📌 Reminders</h3>
+          <ul class="text-white font-semibold space-y-1">
+            <li>✓ Finish your poster if you haven't</li>
+            <li>✓ Practice the Present Passive at home</li>
+            <li>✓ Try to describe one process in English</li>
+            <li>✓ Next class: more traditional clothes!</li>
+          </ul>
+        </div>
+        <p class="mt-8 text-purple-100 text-lg">See you next class! 👋</p>
+      </div>
+    </div>
+    <div class="transition-bottom">
+      ➡️ <strong>Well done, everyone!</strong> Pack up your things, take your poster with you if you haven't finished, and I'll see you next class. Have a great day! 👋
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- FOOTER -->
+<footer class="flex-shrink-0 bg-white border-t-2 border-purple-200 flex items-center justify-between px-4 py-3 z-40 shadow-lg">
+  <button onclick="prevSlide()" id="prev-btn" class="bg-purple-500 text-white font-bold px-6 py-3 rounded-full hover:bg-purple-600 transition text-lg shadow-md disabled:opacity-40 disabled:cursor-not-allowed">← Previous</button>
+  <div class="text-center">
+    <p id="slide-counter-bottom" class="text-sm font-bold text-purple-600">Slide 1 of 13</p>
+    <p class="text-xs text-gray-400">Use ← → or Space to navigate</p>
+  </div>
+  <button onclick="nextSlide()" id="next-btn" class="bg-purple-600 text-white font-bold px-6 py-3 rounded-full hover:bg-purple-700 transition text-lg shadow-md disabled:opacity-40 disabled:cursor-not-allowed">Next →</button>
+</footer>
+
+<script>
+  // ============================================================
+  // SLIDE NAVIGATION
+  // ============================================================
+  const slides = document.querySelectorAll('.slide');
+  const totalSlides = slides.length;
+  let currentSlide = 0;
+  const menuItems = document.querySelectorAll('.menu-item');
+
+  function showSlide(index) {
+    if (index < 0) index = 0;
+    if (index >= totalSlides) index = totalSlides - 1;
+    slides.forEach((s, i) => {
+      s.classList.remove('active', 'prev');
+      if (i === index) s.classList.add('active');
+      else if (i < index) s.classList.add('prev');
+    });
+    currentSlide = index;
+    document.getElementById('slide-counter').textContent = `${index + 1} / ${totalSlides}`;
+    document.getElementById('slide-counter-bottom').textContent = `Slide ${index + 1} of ${totalSlides}`;
+    document.getElementById('progress-bar').style.width = `${((index + 1) / totalSlides) * 100}%`;
+    menuItems.forEach((m, i) => m.classList.toggle('active', i === index));
+    document.getElementById('prev-btn').disabled = (index === 0);
+    document.getElementById('next-btn').disabled = (index === totalSlides - 1);
+  }
+  function nextSlide() { showSlide(currentSlide + 1); }
+  function prevSlide() { showSlide(currentSlide - 1); }
+  function goToSlide(i) { showSlide(i); toggleMenu(); }
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowRight' || e.key === ' ') { e.preventDefault(); nextSlide(); }
+    if (e.key === 'ArrowLeft') { e.preventDefault(); prevSlide(); }
+    if (e.key === 'Escape') { closeMenu(); closePenaltyModal(); closeRewardModal(); }
+  });
+
+  function toggle(id) { const el = document.getElementById(id); if (el) el.classList.toggle('hidden'); }
+  function toggleMenu() { document.getElementById('menu-panel').classList.toggle('open'); document.getElementById('menu-overlay').classList.toggle('hidden'); }
+  function closeMenu() { document.getElementById('menu-panel').classList.remove('open'); document.getElementById('menu-overlay').classList.add('hidden'); }
+
+  // ============================================================
+  // AUDIO SYNTHESIS (Web Audio API)
+  // ============================================================
+  let audioCtx = null;
+  function initAudio() {
+    if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    if (audioCtx.state === 'suspended') audioCtx.resume();
+  }
+
+  function playWarningSound() {
+    initAudio();
+    const now = audioCtx.currentTime;
+    [0, 0.18].forEach(offset => {
+      const osc = audioCtx.createOscillator();
+      const gain = audioCtx.createGain();
+      osc.type = 'square';
+      osc.frequency.value = 880;
+      gain.gain.setValueAtTime(0.001, now + offset);
+      gain.gain.linearRampToValueAtTime(0.12, now + offset + 0.02);
+      gain.gain.exponentialRampToValueAtTime(0.001, now + offset + 0.14);
+      osc.connect(gain).connect(audioCtx.destination);
+      osc.start(now + offset);
+      osc.stop(now + offset + 0.16);
+    });
+  }
+
+  function playEruptionSound() {
+    initAudio();
+    const now = audioCtx.currentTime;
+    // Rumble: white noise through lowpass
+    const bufferSize = audioCtx.sampleRate * 2.5;
+    const buffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
+    const data = buffer.getChannelData(0);
+    for (let i = 0; i < bufferSize; i++) data[i] = Math.random() * 2 - 1;
+    const noise = audioCtx.createBufferSource();
+    noise.buffer = buffer;
+    const filter = audioCtx.createBiquadFilter();
+    filter.type = 'lowpass';
+    filter.frequency.setValueAtTime(250, now);
+    filter.frequency.exponentialRampToValueAtTime(80, now + 2);
+    const gain = audioCtx.createGain();
+    gain.gain.setValueAtTime(0.001, now);
+    gain.gain.linearRampToValueAtTime(0.35, now + 0.15);
+    gain.gain.exponentialRampToValueAtTime(0.001, now + 2.3);
+    noise.connect(filter).connect(gain).connect(audioCtx.destination);
+    noise.start(now);
+    noise.stop(now + 2.4);
+    // Low sub bass
+    const sub = audioCtx.createOscillator();
+    const subGain = audioCtx.createGain();
+    sub.type = 'sine';
+    sub.frequency.setValueAtTime(90, now);
+    sub.frequency.exponentialRampToValueAtTime(35, now + 2);
+    subGain.gain.setValueAtTime(0.001, now);
+    subGain.gain.linearRampToValueAtTime(0.25, now + 0.15);
+    subGain.gain.exponentialRampToValueAtTime(0.001, now + 2.3);
+    sub.connect(subGain).connect(audioCtx.destination);
+    sub.start(now);
+    sub.stop(now + 2.4);
+  }
+
+  // ============================================================
+  // SPANISH VOLCANO SYSTEM
+  // ============================================================
+  let volcanoLevel = 0;       // 0 to 100
+  let peakLevel = 0;          // highest reached during session
+  let sessionStars = 0;
+
+  const levelConfig = {
+    10:  { type: 'warning', message: '⚠️ I heard Spanish! Let\'s switch back to English.' },
+    20:  { type: 'warning', message: '⚠️⚠️ Last warning! Next click = penalty!' },
+    30:  { type: 'penalty', category: 'silly', scope: 'person' },
+    40:  { type: 'penalty', category: 'silly', scope: 'person' },
+    50:  { type: 'penalty', category: 'silly', scope: 'person' },
+    60:  { type: 'penalty', category: 'productive', scope: 'group' },
+    70:  { type: 'penalty', category: 'productive', scope: 'group' },
+    80:  { type: 'penalty', category: 'productive', scope: 'group' },
+    90:  { type: 'penalty', category: 'productive', scope: 'class' },
+    100: { type: 'eruption', scope: 'class' }
+  };
+
+  // ===== PENALTY POOLS =====
+  const sillyPenalties = [
+    { name: '🎭 The Dramatic Soap Opera', text: 'Hand on heart dramatically, look at the ceiling, and gasp: "Alas! My English has escaped me like a bird in the wind! Forgive me, noble audience!"' },
+    { name: '👑 The Shakespearean Apology', text: 'Bow deeply to the left, then to the right, and recite: "Hark! I did speak the forbidden language of my ancestors. I shall now return to the King\'s English!"' },
+    { name: '🤖 The Sci-Fi System Reboot', text: 'Stand stiffly, blink rapidly like a robot, and say: "Bleep bloop. Spanish virus detected. Re-installing English software... 99% complete. System restored."' },
+    { name: '🌦️ The Weather Reporter', text: 'Map out a fake green screen with your hands and report: "Breaking news! A massive cloud of Spanish just swept through the classroom, but bright English sunshine is returning immediately!"' },
+    { name: '🎸 The Air Guitar Solo', text: 'Play an invisible guitar for 10 seconds while saying "I speak English, I rock!" three times.' },
+    { name: '🕺 The Interpretive Dance', text: 'Do a 10-second dance showing how you feel about speaking Spanish.' },
+    { name: '🐌 The Slow-Motion Walk', text: 'Walk to the door and back in extreme slow motion, saying "I... will... speak... English..."' },
+    { name: '🎙️ The News Anchor', text: 'Report the "breaking news" that Spanish was heard in the classroom, using a serious news voice.' },
+    { name: '🎭 The Mime Artist', text: 'Act out a scene silently for 15 seconds. The class guesses what it was.' },
+    { name: '🎤 The Opera Singer', text: 'Sing your next sentence in an opera voice.' },
+    { name: '🤖 The Robot Voice', text: 'Speak in a robot voice for the next 30 seconds.' },
+    { name: '🦸 The Superhero Pose', text: 'Strike a superhero pose and say "I am Captain English, defender of the language!"' },
+    { name: '👏 The Compliment Storm', text: 'Give 3 sincere compliments to 3 different classmates in English.' },
+    { name: '🐢 The Turtle Talk', text: 'Speak in super slow motion for the next 3 sentences.' }
+  ];
+
+  const productivePenalties = [
+    { name: '👅 The Tongue Twister Challenge', text: 'Read this 3 times fast without a mistake: "Six sticky skeletons smiling. Six sticky skeletons smiling. Six sticky skeletons smiling."' },
+    { name: '🔄 The Reverse Translation', text: 'Say these common Spanish phrases in English, out loud to the class:<br>1. ¿Cómo estás?<br>2. Gracias.<br>3. Por favor.<br>4. Buenos días.<br>5. ¿Cómo te llamas?', reveal: '1. How are you? 2. Thank you. 3. Please. 4. Good morning. 5. What is your name?' },
+    { name: '📖 The Word Definition Echo', text: 'Read this word and definition aloud: "Today\'s booster word is \'Gargantuan\' — absolutely massive. Repeat after me: Gargantuan!"' },
+    { name: '🎁 The Mystery Object Ad', text: 'Pick any object on your desk right now. Hold it up like a TV commercial and pitch it to the class:<br>"Are you tired of boring lessons? Buy this amazing [object] today for only one million dollars!"' },
+    { name: '🗣️ The Pronunciation Drill', text: 'Say these 5 tricky words 3 times each, out loud: thorough, thought, through, though, tough.' },
+    { name: '📚 The 30-Second Story', text: 'Tell a 30-second story in English using these 3 words: banana, rocket, umbrella.' },
+    { name: '🎯 The Idiom Challenge', text: 'Use an English idiom in a sentence to describe how you feel right now.' },
+    { name: '🐝 The Spelling Bee', text: 'Spell these 3 words out loud, letter by letter: beautiful, comfortable, favorite.' },
+    { name: '🔤 The Alphabet Race', text: 'Say 5 English words that start with the letter S in 10 seconds.' },
+    { name: '🧩 The Sentence Builder', text: 'Make a sentence in English with these 3 words: elephant, sing, purple.' },
+    { name: '🎭 Two Truths & A Lie', text: 'Tell the class two true things and one lie about yourself in English. Your classmates will guess the lie.' },
+    { name: '🔗 The Synonym Chain', text: 'Give 3 synonyms for the word "happy" in English, out loud.' },
+    { name: '❓ The English Riddle', text: 'Solve this riddle out loud:<br><em>"I have cities, but no houses. I have mountains, but no trees. I have water, but no fish. What am I?"</em>', reveal: 'Answer: A map' },
+    { name: '📝 The Definition Echo', text: 'Read this word aloud: "Perseverance — continuing even when it\'s difficult. Repeat after me: Perseverance!"' }
+];
+
+  const hardPenalties = [
+    { name: '✍️ The Dictation Challenge', text: 'Listen carefully. The teacher will read 5 sentences out loud. The whole class must write them all correctly in English. No help allowed!', involvesTeacher: true },
+    { name: '📝 Extra Homework', text: 'The whole class must write 10 sentences using the Present Passive for next class. Bring them written on paper.' },
+    { name: '📖 The Silent Reading', text: 'The whole class must silently read 1 page of the book (choose any page from Unit 5) and then write a 3-sentence summary in English in your notebook.' },
+    { name: '🗣️ The Class Tongue Twister', text: 'The WHOLE CLASS must say this together 3 times, in perfect sync:<br><em>"She sells seashells by the seashore."</em>' },
+    { name: '🎤 The Group Presentation', text: 'In groups of 3–4, prepare a 1-minute presentation in English about "Why English is Important." Present it to the class.' },
+    { name: '📋 The Vocabulary List', text: 'The whole class must write 20 English words related to clothes and accessories in their notebooks before the next class.' }
+];
+
+  function getPenaltyPool(category) {
+    if (category === 'silly') return sillyPenalties;
+    if (category === 'productive') return productivePenalties;
+    return hardPenalties;
+  }
+
+  // ===== VOLCANO VISUAL UPDATE =====
+  function updateVolcanoVisual() {
+    const fill = document.getElementById('volcano-fill');
+    const percentEl = document.getElementById('volcano-percent');
+    fill.style.width = volcanoLevel + '%';
+    percentEl.textContent = volcanoLevel + '%';
+
+    // Color classes based on level
+    fill.className = 'volcano-fill';
+    if (volcanoLevel < 20) fill.classList.add('level-1');
+    else if (volcanoLevel < 30) fill.classList.add('level-2');
+    else if (volcanoLevel < 50) fill.classList.add('level-3');
+    else if (volcanoLevel < 70) fill.classList.add('level-4');
+    else if (volcanoLevel < 100) fill.classList.add('level-5');
+    else fill.classList.add('level-6');
+
+    // Shake the header when at 90+
+    const header = document.querySelector('header');
+    if (volcanoLevel >= 90) {
+      header.classList.add('shaking');
+      setTimeout(() => header.classList.remove('shaking'), 500);
+    }
+  }
+
+  // ===== MAIN CLICK HANDLER =====
+  function clickSpanish() {
+    volcanoLevel += 10;
+    if (volcanoLevel > 100) volcanoLevel = 100;
+    if (volcanoLevel > peakLevel) peakLevel = volcanoLevel;
+    updateVolcanoVisual();
+
+    const config = levelConfig[volcanoLevel];
+
+    if (!config) return;
+
+    if (config.type === 'warning') {
+      playWarningSound();
+      showToast(config.message);
+    } else if (config.type === 'penalty') {
+      playWarningSound();
+      showPenaltyModal(config.category, config.scope);
+    } else if (config.type === 'eruption') {
+      playEruptionSound();
+      showEruptionModal();
+    }
+  }
+
+  // ===== TOAST =====
+  function showToast(message) {
+    const toast = document.getElementById('toast');
+    toast.textContent = message;
+    toast.className = 'toast show';
+    // Choose color based on current level
+    if (volcanoLevel <= 10) toast.classList.add('warning-1');
+    else toast.classList.add('warning-2');
+    setTimeout(() => toast.classList.remove('show'), 2500);
+  }
+
+  // ===== PENALTY MODAL =====
+  let currentPenaltyCategory = 'silly';
+  let currentPenaltyScope = 'person';
+
+  function showPenaltyModal(category, scope) {
+    currentPenaltyCategory = category;
+    currentPenaltyScope = scope;
+
+    const modal = document.getElementById('penalty-modal');
+    const card = document.getElementById('penalty-card');
+    const badge = document.getElementById('penalty-level-badge');
+    const title = document.getElementById('penalty-title');
+    const scopeEl = document.getElementById('penalty-scope');
+    const catEl = document.getElementById('penalty-category');
+    const textEl = document.getElementById('penalty-text');
+    const revealWrap = document.getElementById('reveal-answer-wrapper');
+    const revealText = document.getElementById('reveal-answer-text');
+
+    badge.textContent = `LEVEL ${volcanoLevel}%`;
+    card.classList.remove('eruption');
+    title.textContent = '🌋 PENALTY!';
+
+    scopeEl.className = 'scope-badge ' + (scope === 'person' ? 'scope-person' : scope === 'group' ? 'scope-group' : 'scope-class');
+    scopeEl.textContent = scope === 'person' ? '👤 Person' : scope === 'group' ? '👥 Group' : '🌍 Whole Class';
+
+    catEl.className = 'category-badge ' + (category === 'silly' ? 'category-silly' : 'category-productive');
+    catEl.textContent = category === 'silly' ? '🎪 Silly Performance' : '🧠 Productive';
+
+    const pool = getPenaltyPool(category);
+    const chosen = pool[Math.floor(Math.random() * pool.length)];
+
+    textEl.innerHTML = `<div class="text-center mb-2 text-lg font-bold text-purple-700">${chosen.name}</div><div>${chosen.text}</div>`;
+
+    // Hide answer by default; show reveal button only if there's a hidden answer
+    revealWrap.classList.add('hidden');
+    revealText.classList.add('hidden');
+    revealText.textContent = '';
+    if (chosen.reveal) {
+        revealWrap.classList.remove('hidden');
+        revealText.dataset.answer = chosen.reveal;
+    }
+
+    modal.classList.add('show');
+}
+
+function rerollPenalty() {
+    const pool = getPenaltyPool(currentPenaltyCategory);
+    const chosen = pool[Math.floor(Math.random() * pool.length)];
+    const textEl = document.getElementById('penalty-text');
+    const revealWrap = document.getElementById('reveal-answer-wrapper');
+    const revealText = document.getElementById('reveal-answer-text');
+
+    textEl.innerHTML = `<div class="text-center mb-2 text-lg font-bold text-purple-700">${chosen.name}</div><div>${chosen.text}</div>`;
+
+    revealWrap.classList.add('hidden');
+    revealText.classList.add('hidden');
+    revealText.textContent = '';
+    if (chosen.reveal) {
+        revealWrap.classList.remove('hidden');
+        revealText.dataset.answer = chosen.reveal;
+    }
+}
+
+function revealPenaltyAnswer() {
+    const revealText = document.getElementById('reveal-answer-text');
+    revealText.textContent = '✅ ' + (revealText.dataset.answer || '');
+    revealText.classList.remove('hidden');
+}
+  function closePenaltyModal() {
+    document.getElementById('penalty-modal').classList.remove('show');
+  }
+
+  // ===== ERUPTION MODAL =====
+  function showEruptionModal() {
+    const modal = document.getElementById('penalty-modal');
+    const card = document.getElementById('penalty-card');
+    const badge = document.getElementById('penalty-level-badge');
+    const title = document.getElementById('penalty-title');
+    const scopeEl = document.getElementById('penalty-scope');
+    const catEl = document.getElementById('penalty-category');
+    const textEl = document.getElementById('penalty-text');
+    const revealWrap = document.getElementById('reveal-answer-wrapper');
+    const revealText = document.getElementById('reveal-answer-text');
+
+    badge.textContent = '💥 ERUPTION!';
+    card.classList.add('eruption');
+    title.textContent = '💥 THE VOLCANO HAS ERUPTED!';
+    scopeEl.className = 'scope-badge scope-class';
+    scopeEl.textContent = '🌍 Whole Class';
+    catEl.className = 'category-badge category-eruption';
+    catEl.textContent = '🔥 Hard Penalty';
+
+    const chosen = hardPenalties[Math.floor(Math.random() * hardPenalties.length)];
+    textEl.innerHTML = `<div class="text-center mb-2 text-lg font-bold text-red-700">${chosen.name}</div><div>${chosen.text}</div><div class="mt-3 text-center text-sm text-gray-600 italic">After this penalty, the volcano resets to 0%.</div>`;
+
+    // No reveal for eruption penalties
+    revealWrap.classList.add('hidden');
+    revealText.classList.add('hidden');
+    revealText.textContent = '';
+
+    modal.classList.add('show');
+    modal.dataset.resetAfterClose = 'true';
+}
+
+  // ===== RESET =====
+  function resetVolcano() {
+    volcanoLevel = 0;
+    updateVolcanoVisual();
+  }
+
+  // ===== REWARD MODAL =====
+  function showReward() {
+    const modal = document.getElementById('reward-modal');
+    const content = document.getElementById('reward-content');
+    let reward = '';
+    let emoji = '';
+    let color = '';
+
+    if (peakLevel === 0 || peakLevel <= 20) {
+      emoji = '🏆';
+      color = 'text-yellow-600';
+      reward = 'GOLD! You spoke English almost the whole class!';
+      sessionStars += 2;
+    } else if (peakLevel <= 50) {
+      emoji = '🥈';
+      color = 'text-gray-500';
+      reward = 'SILVER! Great job staying in English!';
+      sessionStars += 1;
+    } else if (peakLevel <= 90) {
+      emoji = '🥉';
+      color = 'text-orange-600';
+      reward = 'BRONZE! Keep going, you can do better!';
+    } else {
+      emoji = '💀';
+      color = 'text-red-600';
+      reward = 'You erupted! But that means you practiced English a lot today!';
+    }
+
+    document.getElementById('star-tracker').textContent = `⭐ Session: ${sessionStars}`;
+
+    content.innerHTML = `
+      <div class="text-7xl mb-4">${emoji}</div>
+      <h2 class="text-3xl font-bold ${color} mb-2">${reward}</h2>
+      <p class="text-sm text-gray-500 mt-3">Peak volcano level this class: <strong>${peakLevel}%</strong></p>
+      <p class="text-sm text-gray-500 mt-1">Stars earned this class: <strong>${sessionStars}</strong></p>
+    `;
+    modal.classList.add('show');
+  }
+
+  function closeRewardModal() {
+    document.getElementById('reward-modal').classList.remove('show');
+  }
+
+  // ============================================================
+  // GAME: TRANSFORM IT
+  // ============================================================
+  const gameSentences = [
+    { active: "People grow cotton in Colombia.", passive: "Cotton is grown in Colombia." },
+    { active: "Workers pick the cotton.", passive: "The cotton is picked by workers." },
+    { active: "People use leather to make shoes.", passive: "Leather is used to make shoes." },
+    { active: "Someone makes these shirts in India.", passive: "These shirts are made in India." },
+    { active: "People sell clothes in the market.", passive: "Clothes are sold in the market." },
+    { active: "They play football in the square.", passive: "Football is played in the square." },
+    { active: "People clean the cotton.", passive: "The cotton is cleaned." },
+    { active: "Someone sends the clothes to shops.", passive: "The clothes are sent to shops." },
+    { active: "People make fabric from cotton.", passive: "Fabric is made from cotton." },
+    { active: "They use silk to make dresses.", passive: "Silk is used to make dresses." }
+  ];
+  let currentGameIndex = 0;
+  function nextGameSentence() {
+    currentGameIndex = Math.floor(Math.random() * gameSentences.length);
+    document.getElementById('game-sentence').textContent = gameSentences[currentGameIndex].active;
+    document.getElementById('game-answer').textContent = '';
+  }
+  function revealGameAnswer() {
+    document.getElementById('game-answer').textContent = '✅ ' + gameSentences[currentGameIndex].passive;
+  }
+
+  // ============================================================
+  // CULTURE MATCHING
+  // ============================================================
+  let selectedCulture = null;
+  let matchedPairs = [];
+  function selectCultureMatch(el) {
+    const pair = el.dataset.pair;
+    if (el.classList.contains('matched')) return;
+    document.querySelectorAll('.culture-match.selected').forEach(e => e.classList.remove('selected'));
+    el.classList.add('selected');
+    if (selectedCulture && selectedCulture !== el) {
+      if (selectedCulture.dataset.pair === pair) {
+        selectedCulture.classList.remove('selected');
+        el.classList.remove('selected');
+        selectedCulture.classList.add('matched');
+        el.classList.add('matched');
+        document.getElementById('culture-result').innerHTML = '✅ Correct match!';
+        matchedPairs.push(pair);
+        if (matchedPairs.length === 5) document.getElementById('culture-result').innerHTML = '🎉 You matched all of them!';
+        selectedCulture = null;
+      } else {
+        document.getElementById('culture-result').innerHTML = '❌ Not a match. Try again!';
+        selectedCulture.classList.remove('selected');
+        el.classList.remove('selected');
+        selectedCulture = null;
+      }
+    } else {
+      selectedCulture = el;
+    }
+  }
+  function resetCultureMatch() {
+    document.querySelectorAll('.culture-match').forEach(el => el.classList.remove('selected', 'matched'));
+    matchedPairs = []; selectedCulture = null;
+    document.getElementById('culture-result').innerHTML = '';
+  }
+
+  // INIT
+  showSlide(0);
+</script>
+
+</body>
+</html>
